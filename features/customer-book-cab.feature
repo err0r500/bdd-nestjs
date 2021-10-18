@@ -1,24 +1,29 @@
-Feature: Any customer can book a cab
+Feature: Book a cab
 
   A customer wants to book a cab in order to go from a point A to a point B
 
 Background:
 Given some customers exist:
-    | id  | firstName   | lastName |
-    | abc | Matthieu    | Jacquot  |
-    | def | Remy        | Tinco   |
+    | id       | firstName   | lastName |
+    | matthieu | Matthieu    | Jacquot  |
+    | remy     | Remy        | Tinco    |
 
 Given some drivers exist:
-    | id  | firstName | lastName |
-    | abc | Eymeric   | Jacquot  |
-    | def | Matthieu  | Polo     |
+    | id       | firstName | lastName |
+    | eymeric  | Eymeric   | Jacquot  |
+    | matthieu | Matthieu  | Polo     |
 
-Scenario Outline: sufficient balance
-Given I'm authenticated as the customer "<customer_firstname>"
-And the balance on my account is "<balance_before>" euros
-When when I attempt to order driver's "<driver_firstname>" cab from "<starting_address>" to "<arrival_address>"
-Then booking is effective
-And the balance of my account is "<balance_after>" euros
-Examples:
-    | customer_firstname | balance_before | balance_after | driver_firstname | starting_address               | arrival_address                   |
-    | Matthieu           | 35             | 5             | Eymeric          | 43 rue Archereau 75019 Paris   | 2 rue Clisson 75013 Paris         |
+Scenario Outline: creating the rideRequest
+  Given I'm authenticated as the customer "<customer_id>"
+  And some drivers are available nearby "<drivers_nearby>"
+  When I attempt to book a ride from "<start_address>" to "<arrival_address>"
+  Then a RideRequest is "<?created>"
+  #And "<drivers_nearby>" are "<?notified>"
+    Examples: the happy path
+      | customer_id | drivers_nearby    | start_address    | arrival_address | ?created | ?notified |
+      | matthieu    | eymeric           | 11 rue Ducouedic | 13 rue Fautras  | created  | notified  |
+      | remy        | eymeric,matthieu  | 11 rue Ducouedic | 13 rue Fautras  | created  | notified  |
+    Examples: no one's nearby
+      | customer_id | drivers_nearby    | start_address    | arrival_address | ?created   | ?notified   |
+      | matthieu    | -                 | 11 rue Ducouedic | 13 rue Fautras  | notCreated | notNotified |
+

@@ -1,7 +1,11 @@
 export class Customer {
-  private name: string
+  readonly id: string
+  private firstName: string
+  private lastName: string
 
-  constructor(name:string){
-    this.name = name
+  constructor(id: string, firstName: string, lastName: string) {
+    this.id = id
+    this.firstName = firstName
+    this.lastName = lastName
   }
 }
