@@ -5,6 +5,7 @@ import { expect } from 'chai'
 import {
   AuthenticationGateway,
   DriverRepo,
+  EventGateway,
   CustomerRepo
 } from '../../src/logic/abstractClasses'
 import { Customer } from '../../src/domain/customer'
@@ -17,12 +18,14 @@ class CustomerSteps {
   private customerRepo: CustomerRepo
   private rideRequestRepo: RideRequestRepoStub
   private authGateway: AuthenticationGateway
+  private eventGateway: EventGateway
 
   constructor(config: Config) {
     this.driverRepo = config.driverRepo
     this.customerRepo = config.customerRepo
     this.authGateway = config.authGateway
     this.rideRequestRepo = config.rideRequestRepo
+    this.eventGateway = config.eventGateway
   }
 
   @given(/^some customers exist:$/)
@@ -50,12 +53,15 @@ class CustomerSteps {
     return
   }
 
-  @when(/I attempt to book a ride from "([^"]*)" to "([^"]*)" with id "([^"]*)"/)
-  private createRideRequest(start: string, arrival: string, id : string) {
+  @when(
+    /I attempt to book a ride from "([^"]*)" to "([^"]*)" with id "([^"]*)"/
+  )
+  private createRideRequest(start: string, arrival: string, id: string) {
     const createRideRequest = new CreateRideRequest(
       this.driverRepo,
       this.rideRequestRepo,
-      this.authGateway
+      this.authGateway,
+      this.eventGateway
     )
     createRideRequest.handle(id, start, arrival)
   }

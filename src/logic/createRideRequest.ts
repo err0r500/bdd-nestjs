@@ -1,24 +1,28 @@
 import {
   AuthenticationGateway,
   DriverRepo,
+  EventGateway,
   RideRequestRepo
 } from '../logic/abstractClasses'
 
-import { RideRequest } from '../domain/rideRequest'
+import { RideRequest, RideRequestCreatedEvent } from '../domain/rideRequest'
 
 export class CreateRideRequest {
   private driverRepo: DriverRepo
+  private eventGateway: EventGateway
   private rideRequestRepo: RideRequestRepo
   private authGateway: AuthenticationGateway
 
   constructor(
     driverRepo: DriverRepo,
     rideRequestRepo: RideRequestRepo,
-    authGateway: AuthenticationGateway
+    authGateway: AuthenticationGateway,
+    eventGateway: EventGateway
   ) {
     this.driverRepo = driverRepo
     this.rideRequestRepo = rideRequestRepo
     this.authGateway = authGateway
+    this.eventGateway = eventGateway
   }
 
   public handle(id: string, start: string, arrival: string) {
@@ -33,6 +37,6 @@ export class CreateRideRequest {
 
     const rideRequest = new RideRequest(id, currUser.id, start, arrival)
     this.rideRequestRepo.save(rideRequest)
-    // new rideRequestCreatedEvent(request)
+    this.eventGateway.emit(new RideRequestCreatedEvent(id))
   }
 }

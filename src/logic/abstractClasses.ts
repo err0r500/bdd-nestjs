@@ -1,5 +1,6 @@
 import { Customer } from '../domain/customer'
 import { Driver } from '../domain/driver'
+import {RideRequestCreatedEvent} from '../domain/rideRequest'
 
 export abstract class CustomerRepo {
   abstract save(Customer)
@@ -20,4 +21,8 @@ export abstract class AuthenticationGateway {
 
 export abstract class RideRequestRepo {
   abstract save(RideRequest)
+}
+
+export abstract class EventGateway {
+  abstract emit(RideRequestCreatedEvent)
 }

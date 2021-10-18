@@ -20,3 +20,11 @@ export class RideRequest {
     this.status = 'created'
   }
 }
+
+export class RideRequestCreatedEvent {
+  readonly requestID: string
+
+  constructor(requestID: string) {
+    this.requestID = requestID
+  }
+}
