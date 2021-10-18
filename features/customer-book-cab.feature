@@ -18,7 +18,7 @@ Scenario Outline: creating the rideRequest
   And some drivers are available near start "<drivers_nearby>"
   When I attempt to book a ride from "<start_address>" to "<arrival_address>" with id "<id>"
   Then a RideRequest is "<?created>" with id "<id>"
-  And a RideRequestCreatedEvent is "<?created>"
+  And a RideRequestCreatedEvent is "<?created>" for rideRequest "<id>"
     Examples: the happy path
       | id | customer_id | drivers_nearby    | start_address    | arrival_address | ?created |
       | a  | matthieu    | eymeric           | 11 rue Ducouedic | 13 rue Fautras  | created  |

@@ -11,4 +11,8 @@ export class EventGatewayStub implements EventGateway {
   emit(e: RideRequestCreatedEvent) {
     this.eventBus.push(e)
   }
+
+  all(): Array<any> {
+    return this.eventBus
+  }
 }
