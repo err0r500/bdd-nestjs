@@ -1,5 +1,5 @@
-import { AuthenticationGateway } from '../../logic/abstractClasses'
-import { Customer } from '../../domain/customer'
+import { AuthenticationGateway } from '../../src/logic/abstractClasses'
+import { Customer } from '../../src/domain/customer'
 
 export class AuthenticationGatewayStub implements AuthenticationGateway {
   private currentCustomer: Customer | null

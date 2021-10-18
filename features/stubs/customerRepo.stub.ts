@@ -1,5 +1,5 @@
-import { Customer } from '../../domain/customer'
-import { CustomerRepo } from '../../logic/abstractClasses'
+import { Customer } from '../../src/domain/customer'
+import { CustomerRepo } from '../../src/logic/abstractClasses'
 
 export class CustomerRepoStub implements CustomerRepo {
   private repo: Array<Customer>

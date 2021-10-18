@@ -1,7 +1,7 @@
 import { binding, when, then } from 'cucumber-tsflow'
 import { Config } from './config'
-import { RideRequestRepoStub } from '../../src/adapters/driven/rideRequestRepo.stub'
-import { EventGatewayStub } from '../../src/adapters/driven/eventGateway.stub'
+import { RideRequestRepoStub } from '../stubs/rideRequestRepo.stub'
+import { EventGatewayStub } from '../stubs/eventGateway.stub'
 import { expect } from 'chai'
 
 @binding([Config])
@@ -16,10 +16,11 @@ class RideRequestSteps {
 
   @then(/a RideRequest is "([^"]*)" with id "([^"]*)"/)
   private checkRideRequest(status: string, reqID: string) {
+    const rideRequest = this.rideRequestRepo.get(reqID)
     if (status === 'created') {
-      expect(this.rideRequestRepo.get(reqID)).not.to.be.undefined
+      expect(rideRequest).not.to.be.undefined
     } else {
-      expect(this.rideRequestRepo.get(reqID)).to.be.undefined
+      expect(rideRequest).to.be.undefined
     }
   }
 

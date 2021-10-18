@@ -2,7 +2,7 @@ import { DataTable } from '@cucumber/cucumber'
 import { Config } from './config'
 import { binding, given, then } from 'cucumber-tsflow'
 import { expect } from 'chai'
-import { DriverRepoStub } from '../../src/adapters/driven/driverRepo.stub'
+import { DriverRepoStub } from '../stubs/driverRepo.stub'
 import { Driver } from '../../src/domain/driver'
 
 @binding([Config])

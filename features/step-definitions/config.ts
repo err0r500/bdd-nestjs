@@ -2,11 +2,11 @@ import {
   CustomerRepo,
   AuthenticationGateway
 } from '../../src/logic/abstractClasses'
-import { CustomerRepoStub } from '../../src/adapters/driven/customerRepo.stub'
-import { DriverRepoStub } from '../../src/adapters/driven/driverRepo.stub'
-import { AuthenticationGatewayStub } from '../../src/adapters/driven/authGateway.stub'
-import { RideRequestRepoStub } from '../../src/adapters/driven/rideRequestRepo.stub'
-import { EventGatewayStub } from '../../src/adapters/driven/eventGateway.stub'
+import { CustomerRepoStub } from '../stubs/customerRepo.stub'
+import { DriverRepoStub } from '../stubs/driverRepo.stub'
+import { AuthenticationGatewayStub } from '../stubs/authGateway.stub'
+import { RideRequestRepoStub } from '../stubs/rideRequestRepo.stub'
+import { EventGatewayStub } from '../stubs/eventGateway.stub'
 
 export class Config {
   public customerRepo: CustomerRepo

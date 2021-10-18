@@ -1,5 +1,5 @@
-import { Driver } from '../../domain/driver'
-import { DriverRepo } from '../../logic/abstractClasses'
+import { Driver } from '../../src/domain/driver'
+import { DriverRepo } from '../../src/logic/abstractClasses'
 
 export class DriverRepoStub extends DriverRepo {
   private repo: Array<Driver>

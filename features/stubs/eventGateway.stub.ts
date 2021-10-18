@@ -1,5 +1,5 @@
-import { EventGateway } from '../../logic/abstractClasses'
-import { RideRequestCreatedEvent } from '../../domain/rideRequest'
+import { EventGateway } from '../../src/logic/abstractClasses'
+import { RideRequestCreatedEvent } from '../../src/domain/rideRequest'
 
 export class EventGatewayStub implements EventGateway {
   private eventBus: Array<any>

@@ -1,5 +1,5 @@
-import { RideRequest } from '../../domain/rideRequest'
-import { RideRequestRepo } from '../../logic/abstractClasses'
+import { RideRequest } from '../../src/domain/rideRequest'
+import { RideRequestRepo } from '../../src/logic/abstractClasses'
 
 export class RideRequestRepoStub extends RideRequestRepo {
   private repo: Array<RideRequest>

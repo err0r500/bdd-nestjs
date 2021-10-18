@@ -10,7 +10,7 @@ import {
 } from '../../src/logic/abstractClasses'
 import { Customer } from '../../src/domain/customer'
 import { CreateRideRequest } from '../../src/logic/createRideRequest'
-import { RideRequestRepoStub } from 'src/adapters/driven/rideRequestRepo.stub'
+import { RideRequestRepoStub } from '../stubs/rideRequestRepo.stub'
 
 @binding([Config])
 class CustomerSteps {
