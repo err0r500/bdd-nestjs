@@ -33,5 +33,6 @@ export class CreateRideRequest {
 
     const rideRequest = new RideRequest(id, currUser.id, start, arrival)
     this.rideRequestRepo.save(rideRequest)
+    // new rideRequestCreatedEvent(request)
   }
 }

@@ -1,6 +1,6 @@
 import { DataTable } from '@cucumber/cucumber'
 import { Config } from './config'
-import { binding, given } from 'cucumber-tsflow'
+import { binding, given, then } from 'cucumber-tsflow'
 import { expect } from 'chai'
 import { DriverRepoStub } from '../../src/adapters/driven/driverRepo.stub'
 import { Driver } from '../../src/domain/driver'
@@ -24,7 +24,7 @@ class DriverSteps {
     return
   }
 
-  @given(/^some drivers are available nearby "([^"]*)"/)
+  @given(/^some drivers are available near start "([^"]*)"/)
   private driversNearby(raw: string) {
     raw
       .split(',')
@@ -32,5 +32,10 @@ class DriverSteps {
       .map((id: string) => {
         this.driverRepo.addDriverNearby(id)
       })
+  }
+
+  @then(/drivers are "([^"]*)"/)
+  private driversNotified(status: string, callback) {
+    callback(null, 'pending')
   }
 }

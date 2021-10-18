@@ -17,7 +17,6 @@ class CustomerSteps {
   private customerRepo: CustomerRepo
   private rideRequestRepo: RideRequestRepoStub
   private authGateway: AuthenticationGateway
-  private rideRequestID: string
 
   constructor(config: Config) {
     this.driverRepo = config.driverRepo
@@ -51,23 +50,18 @@ class CustomerSteps {
     return
   }
 
-  @when(/I attempt to book a ride from "([^"]*)" to "([^"]*)"/)
-  private createRideRequest(start: string, arrival: string) {
-    this.rideRequestID = Math.random().toString(36).substr(2, 5)
+  @when(/I attempt to book a ride from "([^"]*)" to "([^"]*)" with id "([^"]*)"/)
+  private createRideRequest(start: string, arrival: string, id : string) {
     const createRideRequest = new CreateRideRequest(
       this.driverRepo,
       this.rideRequestRepo,
       this.authGateway
     )
-    createRideRequest.handle(this.rideRequestID, start, arrival)
+    createRideRequest.handle(id, start, arrival)
   }
 
-  @then(/a RideRequest is "([^"]*)"/)
-  private checkRideRequest(status: string) {
-    if (status === 'created') {
-      expect(this.rideRequestRepo.get(this.rideRequestID)).not.to.be.undefined
-    } else {
-      expect(this.rideRequestRepo.get(this.rideRequestID)).to.be.undefined
-    }
+  @then(/customer is "([^"]*)"/)
+  private customerNotified(status: string, callback) {
+    callback(null, 'pending')
   }
 }
