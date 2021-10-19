@@ -29,14 +29,17 @@ Scenario Outline: creating the rideRequest
 
 Scenario Outline: notify drivers near start address or customer if nobody's available
   Given some drivers are available near start "<drivers_nearby>"
-  When the RideRequestCreatedEvent "<id>" is received
-  Then drivers are "<?driver_notified>"
-  And customer is "<?customer_notified>"
+  And RideRequest have been created
+      | id | customer_id | start_address    | arrival_address |
+      | a  | matthieu    | 11 rue Ducouedic | 13 rue Fautras  |
+  When the RideRequestCreatedEvent "<request_id>" is received
+  Then drivers are notified : "<?driver_notified>"
+  And customer "<customer_id>" is notified : "<?customer_notified>"
     Examples: the happy path
-      | id | drivers_nearby    | ?driver_notified | ?customer_notified |
-      | a  | eymeric           | notified         | NoOp               |
-      | b  | eymeric,matthieu  | notified         | NoOp               |
+      | request_id | customer_id | drivers_nearby    | ?driver_notified | ?customer_notified |
+      | a          | matthieu    | eymeric           | true             | false              |
+      | a          | matthieu    | eymeric,matthieu  | true             | false              |
     Examples: no one's nearby
-      | id | drivers_nearby    | ?driver_notified | ?customer_notified |
-      | c  | -                 | NoOp             | notified           |
+      | request_id | customer_id | drivers_nearby    | ?driver_notified | ?customer_notified |
+      | a          | matthieu    | -                 | false            | true               |
 

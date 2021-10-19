@@ -13,11 +13,11 @@ export class RideRequestRepoStub extends RideRequestRepo {
     this.repo.push(c)
   }
 
-  all(): Array<RideRequest> {
-    return this.repo
+  getByID(id: string): RideRequest | undefined {
+    return this.repo.filter((rr: RideRequest) => rr.id === id)?.[0]
   }
 
-  get(id: string): RideRequest | undefined {
-    return this.repo.filter((rr: RideRequest) => rr.id === id)?.[0]
+  all(): Array<RideRequest> {
+    return this.repo
   }
 }

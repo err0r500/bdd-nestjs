@@ -11,6 +11,7 @@ import {
 import { Customer } from '../../src/domain/customer'
 import { CreateRideRequest } from '../../src/logic/createRideRequest'
 import { RideRequestRepoStub } from '../stubs/rideRequestRepo.stub'
+import { NotificationGatewayStub } from '../stubs/notificationGateway.stub'
 
 @binding([Config])
 class CustomerSteps {
@@ -19,6 +20,7 @@ class CustomerSteps {
   private rideRequestRepo: RideRequestRepoStub
   private authGateway: AuthenticationGateway
   private eventGateway: EventGateway
+  private notificationGateway: NotificationGatewayStub
 
   constructor(config: Config) {
     this.driverRepo = config.driverRepo
@@ -26,6 +28,7 @@ class CustomerSteps {
     this.authGateway = config.authGateway
     this.rideRequestRepo = config.rideRequestRepo
     this.eventGateway = config.eventGateway
+    this.notificationGateway = config.notificationGateway
   }
 
   @given(/^some customers exist:$/)
@@ -57,17 +60,26 @@ class CustomerSteps {
     /I attempt to book a ride from "([^"]*)" to "([^"]*)" with id "([^"]*)"/
   )
   private createRideRequest(start: string, arrival: string, id: string) {
-    const createRideRequest = new CreateRideRequest(
+    new CreateRideRequest(
       this.driverRepo,
       this.rideRequestRepo,
       this.authGateway,
       this.eventGateway
-    )
-    createRideRequest.handle(id, start, arrival)
+    ).handle(id, start, arrival)
   }
 
-  @then(/customer is "([^"]*)"/)
-  private customerNotified(status: string, callback) {
-    callback(null, 'pending')
+  @then(/customer "([^"]*)" is notified : "([^"]*)"/)
+  private customerNotified(customerID: string, notified: string) {
+    const customerNotifs = this.notificationGateway
+      .getCustomerNotifs()
+      .filter((to: string) => to === customerID)
+
+    toBool(notified)
+      ? expect(customerNotifs.length).to.eq(1)
+      : expect(customerNotifs.length).to.eq(0)
   }
+}
+
+function toBool(s: string): boolean {
+  return s === 'true'
 }

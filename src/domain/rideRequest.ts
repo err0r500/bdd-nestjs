@@ -1,8 +1,10 @@
+import { DomainEvent } from '../domain/domainEvent'
+
 type rideRequestStatus = 'created' | 'accepted'
 
 export class RideRequest {
   readonly id: string
-  private customerID: string
+  readonly customerID: string
   private start_address: string
   private arrival_address: string
   private status: rideRequestStatus
@@ -21,10 +23,11 @@ export class RideRequest {
   }
 }
 
-export class RideRequestCreatedEvent {
+export class RideRequestCreatedEvent extends DomainEvent {
   readonly requestID: string
 
   constructor(requestID: string) {
+    super()
     this.requestID = requestID
   }
 }

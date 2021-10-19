@@ -1,6 +1,7 @@
 import { Customer } from '../domain/customer'
 import { Driver } from '../domain/driver'
-import {RideRequestCreatedEvent} from '../domain/rideRequest'
+import { DomainEvent } from '../domain/domainEvent'
+import { RideRequest } from '../domain/rideRequest'
 
 export abstract class CustomerRepo {
   abstract save(Customer)
@@ -21,8 +22,14 @@ export abstract class AuthenticationGateway {
 
 export abstract class RideRequestRepo {
   abstract save(RideRequest)
+  abstract getByID(id: string): RideRequest | undefined
 }
 
 export abstract class EventGateway {
-  abstract emit(RideRequestCreatedEvent)
+  abstract emit(DomainEvent)
+}
+
+export abstract class NotificationGateway {
+  abstract notifyCustomer(customerID: string, msg: string)
+  abstract notifyDriver(driverID: string, msg: string)
 }
