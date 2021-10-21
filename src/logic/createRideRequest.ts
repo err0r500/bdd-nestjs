@@ -1,29 +1,20 @@
+import { Injectable } from '@nestjs/common'
 import {
   AuthenticationGateway,
   DriverRepo,
   EventGateway,
   RideRequestRepo
 } from '../logic/abstractClasses'
-
 import { RideRequest, RideRequestCreatedEvent } from '../domain/rideRequest'
 
+@Injectable()
 export class CreateRideRequest {
-  private driverRepo: DriverRepo
-  private eventGateway: EventGateway
-  private rideRequestRepo: RideRequestRepo
-  private authGateway: AuthenticationGateway
-
   constructor(
-    driverRepo: DriverRepo,
-    rideRequestRepo: RideRequestRepo,
-    authGateway: AuthenticationGateway,
-    eventGateway: EventGateway
-  ) {
-    this.driverRepo = driverRepo
-    this.rideRequestRepo = rideRequestRepo
-    this.authGateway = authGateway
-    this.eventGateway = eventGateway
-  }
+    private readonly driverRepo: DriverRepo,
+    private readonly rideRequestRepo: RideRequestRepo,
+    private readonly authGateway: AuthenticationGateway,
+    private readonly eventGateway: EventGateway
+  ) {}
 
   public handle(id: string, start: string, arrival: string) {
     const currUser = this.authGateway.getCurrent()

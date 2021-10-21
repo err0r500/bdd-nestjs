@@ -5,18 +5,18 @@ import { expect } from 'chai'
 import {
   AuthenticationGateway,
   DriverRepo,
-  EventGateway,
-  CustomerRepo
+  EventGateway
 } from '../../src/logic/abstractClasses'
 import { Customer } from '../../src/domain/customer'
 import { CreateRideRequest } from '../../src/logic/createRideRequest'
+import { CustomerRepoStub } from '../stubs/customerRepo.stub'
 import { RideRequestRepoStub } from '../stubs/rideRequestRepo.stub'
 import { NotificationGatewayStub } from '../stubs/notificationGateway.stub'
 
 @binding([Config])
 class CustomerSteps {
   private driverRepo: DriverRepo
-  private customerRepo: CustomerRepo
+  private customerRepo: CustomerRepoStub
   private rideRequestRepo: RideRequestRepoStub
   private authGateway: AuthenticationGateway
   private eventGateway: EventGateway

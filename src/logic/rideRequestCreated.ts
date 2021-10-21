@@ -6,19 +6,11 @@ import {
 import { Driver } from 'src/domain/driver'
 
 export class RideRequestCreatedHanlder {
-  private driverRepo: DriverRepo
-  private rideRequestRepo: RideRequestRepo
-  private notificationGateway: NotificationGateway
-
   constructor(
-    driverRepo: DriverRepo,
-    rideRequestRepo: RideRequestRepo,
-    notificationGateway: NotificationGateway
-  ) {
-    this.driverRepo = driverRepo
-    this.rideRequestRepo = rideRequestRepo
-    this.notificationGateway = notificationGateway
-  }
+    private readonly driverRepo: DriverRepo,
+    private readonly rideRequestRepo: RideRequestRepo,
+    private readonly notificationGateway: NotificationGateway
+  ) {}
 
   public handle(rideRequestID: string) {
     const driversNearStart = this.driverRepo.getNearby()
